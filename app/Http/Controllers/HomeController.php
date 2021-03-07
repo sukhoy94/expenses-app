@@ -2,10 +2,14 @@
 
 namespace  App\Http\Controllers;;
 
+use App\Models\User;
+use App\Repositories\ExpenseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+//    private User $loggedUser;
     /**
      * Create a new controller instance.
      *
@@ -23,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $repo = new ExpenseRepository();
+        $months = $repo->getMonthsWithExpensesForUserForCurrentYear(Auth::user());
+    
+        return view('home', [
+            'data' => [
+                'expenses_months' => $months,
+            ]
+        ]);
     }
 }
