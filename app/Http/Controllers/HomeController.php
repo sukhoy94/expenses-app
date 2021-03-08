@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-//    private User $loggedUser;
     /**
      * Create a new controller instance.
      *
