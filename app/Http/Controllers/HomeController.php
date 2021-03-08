@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    private ExpenseRepository $expenseRepository;
     /**
-     * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ExpenseRepository $expenseRepository)
     {
         $this->middleware('auth');
+        $this->expenseRepository = $expenseRepository;
     }
 
     /**
@@ -26,8 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $repo = new ExpenseRepository();
-        $months = $repo->getMonthsWithExpensesForUserForCurrentYear(Auth::user());
+        $months = $this->expenseRepository->getMonthsWithExpensesForUserForCurrentYear(Auth::user());
     
         return view('home', [
             'data' => [
