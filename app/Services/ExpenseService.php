@@ -8,7 +8,6 @@ namespace App\Services;
 
 use App\Repositories\ExpenseRepository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class ExpenseService
 {
