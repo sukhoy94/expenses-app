@@ -33,11 +33,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $months = $this->expenseRepository->getUserExpensesMonthsPeriods(Auth::user());                
-        $this->expenseService->getUserExpensePeriodsGroupedPerYear($months);
         return view('home', [
             'data' => [
-                'expenses_months' => $months,
+                'expense_periods' => $this->expenseService->getUserExpensePeriodsGroupedPerYear(),
             ]
         ]);
     }

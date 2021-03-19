@@ -30,9 +30,9 @@
                         </div>
                         <select class="custom-select" id="inputGroupSelect01">
                         <option selected>Choose...</option>
-                        @foreach ($data['expenses_months'] as $month)
-                                <option value="{{$month->month_id}}">{{$month->label}}</option>
-                            @endforeach                            
+{{--                        @foreach ($data['expenses_months'] as $month)--}}
+{{--                                <option value="{{$month->month_id}}">{{$month->label}}</option>--}}
+{{--                        @endforeach                            --}}
                         </select>
                     </div>    
                 </div>
