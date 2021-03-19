@@ -1862,17 +1862,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    expenses_periods: null
-  },
-  data: function data() {
-    return {// expenses_periods: this.expenses_periods,
-    };
+    properties: null
   },
   mounted: function mounted() {
-    this.expenses_periods = JSON.parse(this.expenses_periods);
-    console.log('Component mounted.');
+    // bad practice to mutate property, so I'm using date variable instead
+    this.properties_mutated = JSON.parse(this.properties);
+    this.expenses_periods = this.properties_mutated.expenses_periods;
+    this.setPeriodForSelectedYear();
+  },
+  watch: {
+    selected_year: function selected_year() {
+      console.log(this.selected_year);
+      this.setPeriodForSelectedYear();
+    }
+  },
+  data: function data() {
+    return {
+      properties_mutated: null,
+      expenses_periods: null,
+      selected_year: 2021,
+      selected_month: null,
+      selected_year_periods: null
+    };
+  },
+  methods: {
+    setPeriodForSelectedYear: function setPeriodForSelectedYear() {
+      this.selected_year_periods = this.expenses_periods[this.selected_year].periods;
+    }
   }
 });
 
@@ -37433,39 +37464,129 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "card-header" }, [_vm._v("Expenses tracker")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "input-group mb-3" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selected_year,
+                expression: "selected_year"
+              }
+            ],
+            staticClass: "custom-select",
+            attrs: { id: "expensesYears" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selected_year = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          _vm._l(_vm.expenses_periods, function(period, year) {
+            return _c("option", { domProps: { value: year } }, [
+              _vm._v(
+                "\n                    " + _vm._s(year) + "\n                "
+              )
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group mb-3" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selected_month,
+                expression: "selected_month"
+              }
+            ],
+            staticClass: "custom-select",
+            attrs: { id: "expensesMonths" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selected_month = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { selected: "", value: "null" } }, [
+              _vm._v("Choose...")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.selected_year_periods, function(data) {
+              return _c("option", { domProps: { value: data.month_id } }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(data.period) +
+                    "\n                "
+                )
+              ])
+            })
+          ],
+          2
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Expenses tracker")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "input-group mb-3" }, [
-          _c("div", { staticClass: "input-group-prepend" }, [
-            _c(
-              "label",
-              {
-                staticClass: "input-group-text",
-                attrs: { for: "inputGroupSelect01" }
-              },
-              [_vm._v("Months")]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              staticClass: "custom-select",
-              attrs: { id: "inputGroupSelect01" }
-            },
-            [_c("option", { attrs: { selected: "" } }, [_vm._v("Choose...")])]
-          )
-        ])
-      ])
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "label",
+        { staticClass: "input-group-text", attrs: { for: "expensesYears" } },
+        [_vm._v("Year")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "label",
+        { staticClass: "input-group-text", attrs: { for: "expensesMonths" } },
+        [_vm._v("Months")]
+      )
     ])
   }
 ]
