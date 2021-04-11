@@ -106,9 +106,10 @@ class ExpenseService
     
     public function getExpensesMonthSummary(Collection $userExpensesCurrentMonth): array
     {
-        // TODO: to service
+        // TODO: to service, add user param
         $budget = Budget::where('month', '=', Carbon::now()->month)
             ->where('year', '=', Carbon::now()->year)
+            ->where('user_id', '=', $this->userService->getLoggedUser()->id)
             ->get()
             ->first();
         
