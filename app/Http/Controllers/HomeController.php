@@ -2,19 +2,19 @@
 
 namespace  App\Http\Controllers;;
 
-use App\Models\User;
 use App\Repositories\ExpenseRepository;
 use App\Services\ExpenseService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
     private ExpenseRepository $expenseRepository;
     private ExpenseService $expenseService;
+    
     /**
      *
-     * @return void
+     * @param ExpenseRepository $expenseRepository
+     * @param ExpenseService $expenseService
      */
     public function __construct(
         ExpenseRepository $expenseRepository,
@@ -29,15 +29,13 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
-        $months = $this->expenseRepository->getUserExpensesMonthsPeriods(Auth::user());                
-        $this->expenseService->getUserExpensePeriodsGroupedPerYear($months);
         return view('home', [
             'data' => [
-                'expenses_months' => $months,
+                'expenses_periods' => $this->expenseService->getUserExpensePeriodsGroupedPerYear(),
             ]
         ]);
     }

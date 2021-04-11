@@ -39,7 +39,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @auth
+                            <li>
+                                <a class="nav-link" href="/expenses">{{ __('Manage expenses') }}</a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -78,7 +82,7 @@
             </div>
         </nav>
         <div class="container mx-auto">
-            <main>
+            <main class="mt-3">
                 @yield('content')
             </main>
         </div>        

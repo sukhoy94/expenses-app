@@ -6,9 +6,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 
+use App\Models\Budget;
+use App\Models\User;
 use App\Repositories\ExpenseRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class ExpenseService
 {
@@ -91,5 +93,34 @@ class ExpenseService
         });
         
         return new Collection($result);
+    }
+    
+    public function getExpensesForCurrentMonth(User $user): Collection
+    {
+        return $this->repository->getUserExpenses(
+            $user,
+            new Carbon('first day of this month'),
+            new Carbon('last day of this month')
+        );
+    }
+    
+    public function getExpensesMonthSummary(Collection $userExpensesCurrentMonth): array
+    {
+        // TODO: to service
+        $budget = Budget::where('month', '=', Carbon::now()->month)
+            ->where('year', '=', Carbon::now()->year)
+            ->get()
+            ->first();
+        
+        $total = $userExpensesCurrentMonth->sum('amount');
+        $remaining = $budget->amount - $total;
+        $remaining_per_day = $remaining / Carbon::now()->diffInDays(new Carbon('last day of this month'));
+       
+        // TODO: to DTO
+        return [
+            'total' => $total,
+            'remaining' => $remaining,
+            'remaining_per_day' => $remaining_per_day,
+        ];
     }
 }
