@@ -3,21 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Services\ExpenseService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
     private $userService;
+    private $expenseService;
     
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, ExpenseService $expenseService)
     {
         $this->userService = $userService;
+        $this->expenseService = $expenseService;
     }
     
     public function index()
     {
-        return view('expenses.index');
+        $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
+        $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
+       
+        return view('expenses.index', [
+            'userExpensesCurrentMonth' => $userExpensesCurrentMonth,
+            'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
+        ]);
     }
     
     public function store(Request $request)
