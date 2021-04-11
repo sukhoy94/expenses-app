@@ -121,6 +121,7 @@ class ExpenseService
             'total' => $total,
             'remaining' => $remaining,
             'remaining_per_day' => $remaining_per_day,
+            'budget' => $budget->amount,
         ];
     }
 }

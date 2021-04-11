@@ -46,6 +46,7 @@
     <table class="table mt-3">
         <thead>
         <tr>
+            <th scope="col">budget</th>
             <th scope="col">expended</th>
             <th scope="col">remaining</th>
             <th scope="col">remaining per day</th>
@@ -53,9 +54,10 @@
         </thead>
         <tbody>
         <tr>
-            <td>{{ $userExpensesCurrentMonthSummary['total'] }}</td>
-            <td>{{ $userExpensesCurrentMonthSummary['remaining'] }}</td>
-            <td>{{ $userExpensesCurrentMonthSummary['remaining_per_day'] }}</td>
+            <td>{{ $userExpensesCurrentMonthSummary['budget'] }} zł</td>
+            <td>{{ $userExpensesCurrentMonthSummary['total'] }} zł</td>
+            <td>{{ $userExpensesCurrentMonthSummary['remaining'] }} zł</td>
+            <td>{{ $userExpensesCurrentMonthSummary['remaining_per_day'] }} zł</td>
         </tr>
         </tbody>
     </table>
