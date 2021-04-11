@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 
+use App\Models\Budget;
 use App\Models\User;
 use App\Repositories\ExpenseRepository;
 use Carbon\Carbon;
@@ -105,9 +106,14 @@ class ExpenseService
     
     public function getExpensesMonthSummary(Collection $userExpensesCurrentMonth): array
     {
-        $budget = 6590; // TODO: get dynamically from db
+        // TODO: to service
+        $budget = Budget::where('month', '=', Carbon::now()->month)
+            ->where('year', '=', Carbon::now()->year)
+            ->get()
+            ->first();
+        
         $total = $userExpensesCurrentMonth->sum('amount');
-        $remaining = $budget - $total;
+        $remaining = $budget->amount - $total;
         $remaining_per_day = $remaining / Carbon::now()->diffInDays(new Carbon('last day of this month'));
        
         // TODO: to DTO
