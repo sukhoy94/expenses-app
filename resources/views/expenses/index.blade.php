@@ -27,6 +27,7 @@
                 id="expendedInput" 
                 placeholder="Enter how much money was expended"
                 name="expendedAmount"
+                step="0.01"
         >
     </div>
     <div class="form-group">
