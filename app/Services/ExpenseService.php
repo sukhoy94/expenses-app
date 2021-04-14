@@ -10,6 +10,7 @@ use App\Models\Budget;
 use App\Models\User;
 use App\Repositories\ExpenseRepository;
 use Carbon\Carbon;
+use Carbon\Traits\Creator;
 use Illuminate\Support\Collection;
 
 class ExpenseService
@@ -115,14 +116,22 @@ class ExpenseService
         
         $total = $userExpensesCurrentMonth->sum('amount');
         $remaining = $budget->amount - $total;
-        $remaining_per_day = $remaining / Carbon::now()->diffInDays(new Carbon('last day of this month'));
+        $remaining_per_day = $remaining / $this->getDaysTillTheEndOfThisMonthIncludingToday();
        
         // TODO: to DTO
         return [
             'total' => $total,
             'remaining' => $remaining,
-            'remaining_per_day' => $remaining_per_day,
+            'remaining_per_day' => round($remaining_per_day, 2),
             'budget' => $budget->amount,
         ];
+    }
+    
+    /**
+     * @return int
+     */
+    private function getDaysTillTheEndOfThisMonthIncludingToday(): int
+    {
+        return Carbon::now()->diffInDays(new Carbon('last day of this month')) + 1;
     }
 }
