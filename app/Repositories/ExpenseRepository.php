@@ -35,6 +35,7 @@ class ExpenseRepository
                 $from, 
                 $to,
             ])
+            ->orderBy('id', 'desc')
             ->get();
     }
 }
