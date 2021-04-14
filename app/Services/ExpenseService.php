@@ -116,13 +116,13 @@ class ExpenseService
         
         $total = $userExpensesCurrentMonth->sum('amount');
         $remaining = $budget->amount - $total;
-        $remaining_per_day = $remaining / $this->getDaysTillTheEndOfThisMonthIncludingToday();
+        $remainingPerDay = $remaining / $this->getDaysTillTheEndOfThisMonthIncludingToday();
        
         // TODO: to DTO
         return [
             'total' => $total,
             'remaining' => $remaining,
-            'remaining_per_day' => round($remaining_per_day, 2),
+            'remaining_per_day' => round($remainingPerDay, 2),
             'budget' => $budget->amount,
         ];
     }
