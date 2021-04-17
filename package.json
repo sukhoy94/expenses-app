@@ -24,5 +24,10 @@
         "vue": "^2.6.12",
         "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.6.12"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.0"
+        }
     }
 }
