@@ -38,4 +38,9 @@ class ExpenseRepository
             ->orderBy('id', 'desc')
             ->get();
     }
+    
+    public function delete(Expense $expense) 
+    {
+        Expense::find($expense->id)->delete();
+    }
 }

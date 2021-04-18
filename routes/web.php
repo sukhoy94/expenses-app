@@ -19,5 +19,6 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('expenses', 'App\Http\Controllers\ExpenseController@index')->name('expenses.index');
 Route::post('expenses', 'App\Http\Controllers\ExpenseController@store')->name('expenses.store');
+Route::delete('expenses/{expense}', 'App\Http\Controllers\ExpenseController@delete')->name('expenses.delete');
 
 /*/--------------------------------------------------------------------------------------------------------------/*/
