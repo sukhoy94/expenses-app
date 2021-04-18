@@ -7,6 +7,7 @@ namespace App\Services;
 
 
 use App\Models\Budget;
+use App\Models\Expense;
 use App\Models\User;
 use App\Repositories\ExpenseRepository;
 use Carbon\Carbon;
@@ -125,6 +126,14 @@ class ExpenseService
             'remaining_per_day' => round($remainingPerDay, 2),
             'budget' => $budget->amount,
         ];
+    }
+    
+    /**
+     * @param Expense $expense
+     */
+    public function deleteExpense(Expense $expense): void
+    {
+        $this->repository->delete($expense);
     }
     
     /**

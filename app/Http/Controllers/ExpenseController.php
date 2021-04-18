@@ -47,4 +47,11 @@ class ExpenseController extends Controller
         $request->session()->flash('addExpenseSuccessMessage', 'Expense was successfully added');
         return redirect()->route('expenses.index');
     }
+    
+    public function delete(Expense $expense, Request $request)
+    {
+        $this->expenseService->deleteExpense($expense);
+        $request->session()->flash('removeExpenseSuccessMessage', 'Expense was successfully deleted');
+        return redirect()->route('expenses.index');
+    }
 }
