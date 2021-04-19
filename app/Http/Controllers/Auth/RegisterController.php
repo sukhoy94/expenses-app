@@ -32,16 +32,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        abort(Response::HTTP_NOT_FOUND);
-    }
+   
 
     /**
      * Get a validator for an incoming registration request.

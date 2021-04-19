@@ -128,6 +128,13 @@ class ExpenseService
         ];
     }
     
+    public function getTodayExpenseAmount(User $user): float
+    {
+       $expenses =  $this->repository->getUserExpenses($user, Carbon::today(), Carbon::tomorrow());
+       return (float) $expenses->sum('amount');
+    }
+    
+    
     /**
      * @param Expense $expense
      */

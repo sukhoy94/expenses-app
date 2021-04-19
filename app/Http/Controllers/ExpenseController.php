@@ -22,10 +22,12 @@ class ExpenseController extends Controller
     {        
         $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
         $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
-       
+        $spentToday = $this->expenseService->getTodayExpenseAmount($this->userService->getLoggedUser());   
+
         return view('expenses.index', [
             'userExpensesCurrentMonth' => $userExpensesCurrentMonth,
             'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
+            'spentToday' => $spentToday,
         ]);
     }
     
