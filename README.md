@@ -12,3 +12,6 @@ sass
 
 
 url: https://controlmoney.pl/
+
+<img src="https://controlmoney.pl/img/github/money.jpg" height="100px" />
+
