@@ -1,4 +1,4 @@
-### Expense app
+### Expenses app
 
 Application about tracking your own expenses.
 
