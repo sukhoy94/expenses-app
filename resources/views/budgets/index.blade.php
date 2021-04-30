@@ -12,7 +12,35 @@
         </div>
     @endif
 
-    <div class="mt-3">
+    @if(session('budgetModifiedSuccessMessage'))
+        <div class="alert alert-success">
+            {{session('budgetModifiedSuccessMessage')}}
+        </div>
+    @endif
+    
+    <div class="mt-5">
+        <h4 class="mb-3">Set your budget for current month</h4>
+        <form method="POST" action="{{route('budgets.store')}}">
+            @csrf 
+            <div class="form-group">
+                <label for="budgetAmount">Budget</label>
+                <input 
+                        type="number" 
+                        class="form-control" 
+                        id="budgetAmount" 
+                        placeholder="Enter budget" 
+                        value="{{ $currentMonthBudget->amount }}"
+                        name="amount"
+                >
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+
+        </form>
+    </div>
+
+    <div class="mt-5">
+        <h4 class="mb-3">History</h4>
+
         <table class="table mt-3">
             <thead>
             <tr>

@@ -28,5 +28,6 @@ Route::delete('expenses/{expense}', [ExpenseController::class, 'delete'])->name(
 
 /*/------------------------------------- budgets ----------------------------------------------------------/*/
 Route::get('budgets', [BudgetController::class, 'index'])->name('budgets.index');
+Route::post('budgets', [BudgetController::class, 'store'])->name('budgets.store');
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
