@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     use HasFactory;
-    
+ 
+    protected $fillable = [
+        'amount',  
+    ];
     public function user()
     {
         return $this->hasOne(User::class);

@@ -8,6 +8,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\BudgetRepository;
+use Carbon\Carbon;
 
 class BudgetService
 {
@@ -21,5 +22,13 @@ class BudgetService
     public function getUserBudgets(User $user)
     {
         return $user->budgets()->get();
+    }
+    
+    public function currentMonthBudget(User $user)
+    {       
+        return $this->budgetRepository->getBudget([
+            'month' => Carbon::now()->month,
+            'user_id' => $user->id,
+        ])->first();
     }
 }
