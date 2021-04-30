@@ -22,8 +22,10 @@
             </thead>
             <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                @foreach($budgets as $budget)
+                    <td>{{$budget->period}}</td>
+                    <td>{{$budget->amount}} zł</td>
+                @endforeach
             </tbody>
         </table>
     </div>

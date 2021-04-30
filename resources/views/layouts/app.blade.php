@@ -41,7 +41,10 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                             <li>
-                                <a class="nav-link" href="/expenses">{{ __('Manage expenses') }}</a>
+                                <a class="nav-link" href="{{ route('expenses.index') }}">{{ __('Expenses') }}</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ route('budgets.index') }}">{{ __('Budgets') }}</a>
                             </li>
                         @endauth
                     </ul>
