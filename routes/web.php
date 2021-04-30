@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +19,14 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 /*/------------------------------------- expenses ----------------------------------------------------------/*/
 
-Route::get('expenses', 'App\Http\Controllers\ExpenseController@index')->name('expenses.index');
-Route::post('expenses', 'App\Http\Controllers\ExpenseController@store')->name('expenses.store');
-Route::delete('expenses/{expense}', 'App\Http\Controllers\ExpenseController@delete')->name('expenses.delete');
+Route::get('expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::post('expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+Route::delete('expenses/{expense}', [ExpenseController::class, 'delete'])->name('expenses.delete');
 
 /*/--------------------------------------------------------------------------------------------------------------/*/
+
+
+/*/------------------------------------- budgets ----------------------------------------------------------/*/
+Route::get('budgets', [BudgetController::class, 'index'])->name('budgets.index');
+/*/--------------------------------------------------------------------------------------------------------------/*/
+
