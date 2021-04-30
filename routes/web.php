@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,9 @@ Route::post('expenses', 'App\Http\Controllers\ExpenseController@store')->name('e
 Route::delete('expenses/{expense}', 'App\Http\Controllers\ExpenseController@delete')->name('expenses.delete');
 
 /*/--------------------------------------------------------------------------------------------------------------/*/
+
+
+/*/------------------------------------- budgets ----------------------------------------------------------/*/
+Route::get('budgets', [BudgetController::class, 'index']);
+/*/--------------------------------------------------------------------------------------------------------------/*/
+
