@@ -9,9 +9,8 @@ class Budget extends Model
 {
     use HasFactory;
  
-    protected $fillable = [
-        'amount',  
-    ];
+    protected $guarded = [];
+    
     public function user()
     {
         return $this->hasOne(User::class);

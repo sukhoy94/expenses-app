@@ -21,6 +21,7 @@ class ExpenseController extends Controller
     public function index()
     {        
         $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
+//        dd($userExpensesCurrentMonth);
         $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
         $spentToday = $this->expenseService->getTodayExpenseAmount($this->userService->getLoggedUser());   
 

@@ -34,7 +34,6 @@ class BudgetController extends Controller
         $budgets = $this->budgetHelper->addPeriodForBudget(
             $this->budgetService->getUserBudgets($this->userService->getLoggedUser())
         );
-                
         
         return view('budgets.index', [
             'budgets' => $budgets,
@@ -51,7 +50,7 @@ class BudgetController extends Controller
         ]);
         
         $loggedUserId = $this->userService->getLoggedUser()->id;
-        
+
         if (!$request->id) {
             Budget::updateOrCreate(
                 ['user_id' => $loggedUserId, 'month' => Carbon::now()->month, 'year' => Carbon::now()->year], // match condition
