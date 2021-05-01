@@ -21,7 +21,10 @@ class BudgetService
     
     public function getUserBudgets(User $user)
     {
-        return $user->budgets()->get();
+        return $user
+            ->budgets()
+            ->orderByDesc('id')
+            ->get();
     }
     
     public function currentMonthBudget(User $user)
