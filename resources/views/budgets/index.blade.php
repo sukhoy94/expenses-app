@@ -29,7 +29,9 @@
                         class="form-control" 
                         id="budgetAmount" 
                         placeholder="Enter budget" 
-                        value="{{ $currentMonthBudget->amount }}"
+                        @if($currentMonthBudget)
+                            value="{{ $currentMonthBudget->amount }}"
+                        @endif
                         name="amount"
                 >
             </div>
@@ -43,17 +45,18 @@
 
         <table class="table mt-3">
             <thead>
-            <tr>
-                <th scope="col">period</th>
-                <th scope="col">budget</th>
-            </tr>
+                <tr>
+                    <th scope="col">period</th>
+                    <th scope="col">budget</th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                @foreach($budgets as $budget)
+            @foreach($budgets as $budget)
+                <tr>
                     <td>{{$budget->period}}</td>
                     <td>{{$budget->amount}} zł</td>
-                @endforeach
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

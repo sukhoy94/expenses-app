@@ -101,8 +101,8 @@ class ExpenseService
     {
         return $this->repository->getUserExpenses(
             $user,
-            new Carbon('first day of this month'),
-            new Carbon('last day of this month')
+            (Carbon::now())->firstOfMonth(),
+            (Carbon::now())->lastOfMonth()
         );
     }
     
@@ -115,8 +115,10 @@ class ExpenseService
             ->get()
             ->first();
         
+        $budgetAmount = $budget ? $budget->amount : 0;
+        
         $total = $userExpensesCurrentMonth->sum('amount');
-        $remaining = $budget->amount - $total;
+        $remaining = $budgetAmount - $total;
         $remainingPerDay = $remaining / $this->getDaysTillTheEndOfThisMonthIncludingToday();
        
         // TODO: to DTO
@@ -124,7 +126,7 @@ class ExpenseService
             'total' => $total,
             'remaining' => $remaining,
             'remaining_per_day' => round($remainingPerDay, 2),
-            'budget' => $budget->amount,
+            'budget' => $budgetAmount,
         ];
     }
     
