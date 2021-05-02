@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExpenseRequest;
 use App\Models\Expense;
 use App\Services\ExpenseService;
 use App\Services\UserService;
@@ -21,7 +22,6 @@ class ExpenseController extends Controller
     public function index()
     {        
         $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
-//        dd($userExpensesCurrentMonth);
         $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
         $spentToday = $this->expenseService->getTodayExpenseAmount($this->userService->getLoggedUser());   
 
@@ -32,13 +32,25 @@ class ExpenseController extends Controller
         ]);
     }
     
-    public function store(Request $request)
+    public function edit(Expense $expense)
     {
-        $request->validate([
-            'expendedAmount' => 'required|min:1|numeric',
-            'expendedAmountTitle' => 'required',
+        return view('expenses.edit', [
+            'expense' => $expense,
         ]);
-
+    }
+    
+    public function update(StoreExpenseRequest $request, Expense $expense)
+    {
+        $expense->amount = $request->expendedAmount;   
+        $expense->title = $request->expendedAmountTitle;   
+        $expense->save();
+        
+        $request->session()->flash('updateExpenseSuccessMessage', 'Expense was successfully updated');
+        return redirect()->route('expenses.edit', ['expense' => $expense->id]);
+    }
+    
+    public function store(StoreExpenseRequest $request)
+    {
         $expense = new Expense();
         
         $expense->amount = $request->input('expendedAmount');
