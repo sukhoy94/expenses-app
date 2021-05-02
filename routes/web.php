@@ -20,6 +20,8 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 /*/------------------------------------- expenses ----------------------------------------------------------/*/
 
 Route::get('expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::get('expenses/{expense}', [ExpenseController::class, 'edit'])->name('expenses.edit');
+Route::put('expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
 Route::post('expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 Route::delete('expenses/{expense}', [ExpenseController::class, 'delete'])->name('expenses.delete');
 
