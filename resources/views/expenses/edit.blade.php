@@ -19,6 +19,14 @@
     @csrf
     @method('PUT')
     <div class="form-group">
+        <div class="form-group">
+            <label for="expenseCategory">Category</label>
+            <select class="form-control" name="category" id="expenseCategory">
+                @foreach($categories as $category)
+                    <option @if($expense->category_id == $category->id) selected @endif value="{{ $category->id }}">{{ $category->title }}</option>
+                @endforeach
+            </select>
+        </div>
         <label for="expendedInput">Expended</label>
         <input
                 type="number"
