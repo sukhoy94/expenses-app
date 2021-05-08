@@ -27,6 +27,14 @@
         <form method="POST" action="{{route('expenses.store')}}">
             @csrf
             <div class="form-group">
+                <label for="expenseCategory">Category</label>
+                <select class="form-control" name="category" id="expenseCategory">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="expendedInput">Expended</label>
                 <input
                         type="number"

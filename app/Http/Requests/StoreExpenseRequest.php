@@ -26,6 +26,7 @@ class StoreExpenseRequest extends FormRequest
         return [
             'expendedAmount' => 'required|min:1|numeric',
             'expendedAmountTitle' => 'required',
+            'category' => 'required|numeric',
         ];
     }
 }

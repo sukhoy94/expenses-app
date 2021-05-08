@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpenseRequest;
+use App\Models\Category;
 use App\Models\Expense;
 use App\Services\ExpenseService;
 use App\Services\UserService;
@@ -29,6 +30,7 @@ class ExpenseController extends Controller
             'userExpensesCurrentMonth' => $userExpensesCurrentMonth,
             'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
             'spentToday' => $spentToday,
+            'categories' => Category::all(),
         ]);
     }
     
@@ -36,6 +38,7 @@ class ExpenseController extends Controller
     {
         return view('expenses.edit', [
             'expense' => $expense,
+            'categories' => Category::all(),
         ]);
     }
     
@@ -43,6 +46,7 @@ class ExpenseController extends Controller
     {
         $expense->amount = $request->expendedAmount;   
         $expense->title = $request->expendedAmountTitle;   
+        $expense->category_id = $request->category;   
         $expense->save();
         
         $request->session()->flash('updateExpenseSuccessMessage', 'Expense was successfully updated');
@@ -55,6 +59,8 @@ class ExpenseController extends Controller
         
         $expense->amount = $request->input('expendedAmount');
         $expense->title = $request->input('expendedAmountTitle');
+        $expense->category_id = $request->input('category');
+    
         $expense->user_id = $this->userService->getLoggedUser()->id;
         
         $expense->save();
