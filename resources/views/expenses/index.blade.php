@@ -87,6 +87,7 @@
                 <tr>
                     <th scope="col">title</th>
                     <th scope="col">amount</th>
+                    <th scope="col">category</th>
                     <th scope="col">data</th>
                     <th scope="col"></th>
                 </tr>
@@ -96,6 +97,7 @@
                     <tr>
                         <td>{{ $expense->title }}</td>
                         <td>{{ $expense->amount }} zł</td>
+                        <td>{{ $expense->category->title }}</td>
                         <td>{{ $expense->created_at }}</td>
                         <td>
                             <a href="{{ route('expenses.edit', ['expense' =>  $expense->id]) }}" class="btn btn-secondary" title="edit">
