@@ -75,7 +75,24 @@
                     <td>{{ $userExpensesCurrentMonthSummary['budget'] }} zł</td>
                     <td>{{ $userExpensesCurrentMonthSummary['total'] }} zł</td>
                     <td>{{ $userExpensesCurrentMonthSummary['remaining'] }} zł</td>
-                    <td>{{ $userExpensesCurrentMonthSummary['remaining_per_day'] }} zł</td>
+                    <td>
+                        <span 
+                                class="
+                                    badge 
+                                    @if ($userExpensesCurrentMonthSummary['remaining'] > 100)
+                                        badge-success
+                                    @elseif(($userExpensesCurrentMonthSummary['remaining'] > 50))
+                                        badge-warning
+                                    @else
+                                        badge-danger
+                                    @endif
+                                "
+                        > 
+                            {{ $userExpensesCurrentMonthSummary['remaining_per_day'] }} zł
+                        </span>
+{{--                        <span class="badge badge-warning">Warning</span>--}}
+                       
+                    </td>
                 </tr>
                 </tbody>
             </table>
