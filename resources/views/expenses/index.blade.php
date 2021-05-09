@@ -79,9 +79,9 @@
                         <span 
                                 class="
                                     badge 
-                                    @if ($userExpensesCurrentMonthSummary['remaining'] > 100)
+                                    @if ($userExpensesCurrentMonthSummary['remaining_per_day'] > 100)
                                         badge-success
-                                    @elseif(($userExpensesCurrentMonthSummary['remaining'] > 50))
+                                    @elseif(($userExpensesCurrentMonthSummary['remaining_per_day'] > 50))
                                         badge-warning
                                     @else
                                         badge-danger
