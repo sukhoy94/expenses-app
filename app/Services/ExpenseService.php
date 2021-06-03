@@ -101,8 +101,8 @@ class ExpenseService
     {
         return $this->repository->getUserExpenses(
             $user,
-            (Carbon::now())->firstOfMonth(),
-            (Carbon::now())->lastOfMonth()
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
         );
     }
     
