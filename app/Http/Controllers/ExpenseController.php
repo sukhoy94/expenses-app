@@ -25,12 +25,16 @@ class ExpenseController extends Controller
         $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
         $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
         $spentToday = $this->expenseService->getTodayExpenseAmount($this->userService->getLoggedUser());   
-
+        $top10expenses = $userExpensesCurrentMonth
+            ->sortBy('amount', SORT_REGULAR, true)
+            ->slice(0,10);
+        
         return view('expenses.index', [
             'userExpensesCurrentMonth' => $userExpensesCurrentMonth,
             'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
             'spentToday' => $spentToday,
             'categories' => Category::all(),
+            'top10expenses' => $top10expenses,
         ]);
     }
     

@@ -56,7 +56,7 @@
                 >
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </form>        
 
         <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: {{ $spentToday }} zł
 
@@ -99,6 +99,27 @@
         </div>
 
         <div class="mt-3">
+            <h2>Top 10 expenses this month</h2>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>title</th>
+                    <th>amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($top10expenses as $key => $expense)
+                    <tr>
+                        <td>{{ $expense->title }}</td>
+                        <td>{{ $expense->amount }} zł</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>        
+
+        <div class="mt-3">
+            <h2>Expenses list</h2>
             <table class="table table-hover">
                 <thead>
                 <tr>
