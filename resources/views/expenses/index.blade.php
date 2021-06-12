@@ -105,6 +105,7 @@
                 <tr>
                     <th>title</th>
                     <th>amount</th>
+                    <th>date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,6 +113,7 @@
                     <tr>
                         <td>{{ $expense->title }}</td>
                         <td>{{ $expense->amount }} zł</td>
+                        <td>{{ $expense->created_at }}</td>
                     </tr>
                 @endforeach
                 </tbody>
