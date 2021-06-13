@@ -58,7 +58,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>        
 
-        <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: {{ $spentToday }} zł
+        <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: {{ $spentToday }} {{ $currency['label'] }}
 
         <div class="mt-3">
             <table class="table mt-3">
@@ -72,9 +72,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ $userExpensesCurrentMonthSummary['budget'] }} zł</td>
-                    <td>{{ $userExpensesCurrentMonthSummary['total'] }} zł</td>
-                    <td>{{ $userExpensesCurrentMonthSummary['remaining'] }} zł</td>
+                    <td>{{ $userExpensesCurrentMonthSummary['budget'] }} {{ $currency['label'] }}</td>
+                    <td>{{ $userExpensesCurrentMonthSummary['total'] }} {{ $currency['label'] }}</td>
+                    <td>{{ $userExpensesCurrentMonthSummary['remaining'] }} {{ $currency['label'] }}</td>
                     <td>
                         <span 
                                 class="
@@ -88,10 +88,8 @@
                                     @endif
                                 "
                         > 
-                            {{ $userExpensesCurrentMonthSummary['remaining_per_day'] }} zł
-                        </span>
-{{--                        <span class="badge badge-warning">Warning</span>--}}
-                       
+                            {{ $userExpensesCurrentMonthSummary['remaining_per_day'] }} {{ $currency['label'] }}
+                        </span>                       
                     </td>
                 </tr>
                 </tbody>
@@ -112,7 +110,7 @@
                 @foreach ($top10expenses as $key => $expense)
                     <tr>
                         <td>{{ $expense->title }}</td>
-                        <td>{{ $expense->amount }} zł</td>
+                        <td>{{ $expense->amount }} {{ $currency['label'] }}</td>
                         <td>{{ $expense->created_at }}</td>
                     </tr>
                 @endforeach
@@ -136,7 +134,7 @@
                 @foreach ($userExpensesCurrentMonth as $key => $expense)
                     <tr>
                         <td>{{ $expense->title }}</td>
-                        <td>{{ $expense->amount }} zł</td>
+                        <td>{{ $expense->amount }} {{ $currency['label'] }}</td>
                         <td>{{ $expense->category->title }}</td>
                         <td>{{ $expense->created_at }}</td>
                         <td>
