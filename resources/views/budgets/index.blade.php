@@ -54,7 +54,7 @@
             @foreach($budgets as $budget)
                 <tr>
                     <td>{{$budget->period}}</td>
-                    <td>{{$budget->amount}} zł</td>
+                    <td>{{$budget->amount}} {{ $currency['label'] }}</td>
                 </tr>
             @endforeach
             </tbody>
