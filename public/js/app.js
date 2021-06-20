@@ -1889,6 +1889,9 @@ __webpack_require__.r(__webpack_exports__);
     selected_year: function selected_year() {
       console.log(this.selected_year);
       this.setPeriodForSelectedYear();
+    },
+    selected_month: function selected_month() {
+      this.getDataForSelectedPeriod();
     }
   },
   data: function data() {
@@ -1903,6 +1906,21 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     setPeriodForSelectedYear: function setPeriodForSelectedYear() {
       this.selected_year_periods = this.expenses_periods[this.selected_year].periods;
+    },
+    getDataForSelectedPeriod: function getDataForSelectedPeriod() {
+      axios.get('api/expenses', {
+        params: {
+          year: this.selected_year,
+          month: this.selected_month
+        }
+      }).then(function (response) {
+        // handle success
+        console.log(response);
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+      }).then(function () {// always executed
+      });
     }
   }
 });
