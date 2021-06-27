@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
-
+import moment from 'moment'
 import Vue from 'vue'
+
+Vue.prototype.moment = moment
 
 /**
  * The following block of code may be used to automatically register your

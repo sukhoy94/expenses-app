@@ -33,3 +33,8 @@ Route::get('budgets', [BudgetController::class, 'index'])->name('budgets.index')
 Route::post('budgets', [BudgetController::class, 'store'])->name('budgets.store');
 /*/--------------------------------------------------------------------------------------------------------------/*/
 
+/*/------------------------------------- web api ----------------------------------------------------------/*/
+Route::group(['prefix' => 'api',], function() {
+    Route::get('expenses', [\App\Http\Controllers\Api\ExpenseController::class, 'index'])->name('api.expenses.index');
+});
+/*/--------------------------------------------------------------------------------------------------------------/*/
