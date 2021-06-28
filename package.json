@@ -29,5 +29,8 @@
         "platform": {
             "php": "7.4.0"
         }
+    },
+    "dependencies": {
+        "moment": "^2.29.1"
     }
 }
