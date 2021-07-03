@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td>remaining</td>
-                        <td><{{ $userExpensesCurrentMonthSummary['remaining'] }} {{ $currency['label'] }}</td>
+                        <td>{{ $userExpensesCurrentMonthSummary['remaining'] }} {{ $currency['label'] }}</td>
                     </tr>
                     <tr>
                         <td>remaining per day</td>
@@ -134,7 +134,7 @@
         </div>
 
         <div class="mt-3">
-            <h2>Top 10 expenses this month</h2>
+            <h4>Top 10</h4>
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
@@ -154,7 +154,7 @@
         </div>        
 
         <div class="mt-3">
-            <h2>Expenses list</h2>
+            <h4>Expenses</h4>
             <div class="d-none d-sm-block">
                 <table class="table table-hover">
                     <thead>
