@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Expenses\List;
+namespace App\View\Components\Expenses\Index;
 
 use Illuminate\View\Component;
 
@@ -25,6 +25,6 @@ class Mobile extends Component
      */
     public function render()
     {
-        return view('components.expenses.list.mobile');
+        return view('components.expenses.index.mobile');
     }
 }

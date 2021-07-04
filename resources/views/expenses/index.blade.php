@@ -87,8 +87,8 @@
 
         <div class="mt-3">
             <h4>Expenses</h4>
-            <x-expenses.list.desktop :userExpensesCurrentMonth="$userExpensesCurrentMonth"/>
-            <x-expenses.list.mobile :userExpensesCurrentMonth="$userExpensesCurrentMonth"/>            
+            <x-expenses.index.desktop :userExpensesCurrentMonth="$userExpensesCurrentMonth"/>
+            <x-expenses.index.mobile :userExpensesCurrentMonth="$userExpensesCurrentMonth"/>            
         </div>
 
     @else
