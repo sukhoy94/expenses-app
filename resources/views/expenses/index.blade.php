@@ -58,7 +58,12 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>        
 
-        <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: {{ $spentToday }} {{ $currency['label'] }}
+        <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: 
+        {{ $spentToday }} {{ $currency['label'] }}
+        
+        @if ($spentTodayYesterdayDifferenceLabel)
+            ({{$spentTodayYesterdayDifference}} {{ $currency['label'] }} {{$spentTodayYesterdayDifferenceLabel}} than yesterday)
+        @endif
 
         <div class="mt-3">
             <x-expenses.summary.desktop :userExpensesCurrentMonthSummary="$userExpensesCurrentMonthSummary"/>

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Expense;
 use App\Services\ExpenseService;
 use App\Services\UserService;
+use App\ValueObjects\DatePeriod\DatePeriod;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -22,9 +23,21 @@ class ExpenseController extends Controller
     
     public function index()
     {        
-        $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($this->userService->getLoggedUser());
-        $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($userExpensesCurrentMonth);   
-        $spentToday = $this->expenseService->getTodayExpenseAmount($this->userService->getLoggedUser());   
+        $user = $this->userService->getLoggedUser();
+        
+        $userExpensesCurrentMonth = $this->expenseService->getExpensesForCurrentMonth($user);
+        $userExpensesCurrentMonthSummary = $this->expenseService->getExpensesMonthSummary($user);   
+        $spentToday = $this->expenseService->getTodayExpenseAmount($user);   
+        $spentYesterday = $this->expenseService->getYesterdayExpenseAmount($user);   
+
+        $spentTodayYesterdayDifference = $spentToday - $spentYesterday;
+     
+        if ($spentTodayYesterdayDifference > 0) {
+            $spentTodayYesterdayDifferenceLabel = 'more';
+        } else {
+            $spentTodayYesterdayDifferenceLabel = 'less';
+        }
+        
         $top10expenses = $userExpensesCurrentMonth
             ->sortBy('amount', SORT_REGULAR, true)
             ->slice(0,10);
@@ -33,6 +46,8 @@ class ExpenseController extends Controller
             'userExpensesCurrentMonth' => $userExpensesCurrentMonth,
             'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
             'spentToday' => $spentToday,
+            'spentTodayYesterdayDifferenceLabel' => $spentTodayYesterdayDifferenceLabel,
+            'spentTodayYesterdayDifference' => $spentTodayYesterdayDifference,
             'categories' => Category::all(),
             'top10expenses' => $top10expenses,
         ]);
