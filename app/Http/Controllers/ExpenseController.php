@@ -30,7 +30,7 @@ class ExpenseController extends Controller
         $spentToday = $this->expenseService->getTodayExpenseAmount($user);   
         $spentYesterday = $this->expenseService->getYesterdayExpenseAmount($user);   
 
-        $spentTodayYesterdayDifference = abs($spentToday - $spentYesterday);
+        $spentTodayYesterdayDifference = $spentToday - $spentYesterday;
      
         if ($spentTodayYesterdayDifference > 0) {
             $spentTodayYesterdayDifferenceLabel = 'more';
@@ -47,7 +47,7 @@ class ExpenseController extends Controller
             'userExpensesCurrentMonthSummary' => $userExpensesCurrentMonthSummary,
             'spentToday' => $spentToday,
             'spentTodayYesterdayDifferenceLabel' => $spentTodayYesterdayDifferenceLabel,
-            'spentTodayYesterdayDifference' => $spentTodayYesterdayDifference,
+            'spentTodayYesterdayDifference' => abs($spentTodayYesterdayDifference),
             'categories' => Category::all(),
             'top10expenses' => $top10expenses,
         ]);
