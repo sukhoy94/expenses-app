@@ -19,22 +19,20 @@ class DatePeriod
      */
     public function __construct(array $period = [])
     {
-             
         $from = $period['from'];
         $to = $period['to'];
         
-        try {   
+        try {
             $this->from = Carbon::createFromFormat('Y-m-d', $from)->startOfDay();
             $this->to = Carbon::createFromFormat('Y-m-d', $to)->startOfDay();
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new InvalidDatePeriodException('invalid format, correct format is Y-m-d, for example 2020-02-02');
         }
         
-               
+        
         if ($this->from->greaterThan($this->to)) {
             throw new InvalidDatePeriodException('start date cannot be greater than end date');
-        }        
+        }
     }
     
     /**
@@ -51,5 +49,5 @@ class DatePeriod
     public function to(): Carbon
     {
         return $this->to;
-    }  
+    }
 }
