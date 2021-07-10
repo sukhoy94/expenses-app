@@ -7,6 +7,7 @@ namespace App\Repositories;
 
 
 use App\Models\Expense;
+use App\ValueObjects\DatePeriod\DatePeriod;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Foundation\Auth\User;
@@ -26,6 +27,19 @@ class ExpenseRepository
             ->where('user_id', '=', $user->id,)
             ->orderBy('created_at')
             ->get();
+    }
+    
+    public function getTotalAmountOfSpentMoneyForPeriod(User $user, DatePeriod $datePeriod): float
+    {
+//        DB::enableQueryLog();
+        return (float) DB::table('expenses')
+            ->where('user_id', '=',  $user->id)
+            ->whereBetween('created_at', [
+                $datePeriod->from(),
+                $datePeriod->to()->endOfDay(),
+            ])
+            ->sum('amount');    
+//        dd(DB::getQueryLog());
     }
     
     public function getUserExpenses(User $user, Carbon $from, Carbon $to): Collection

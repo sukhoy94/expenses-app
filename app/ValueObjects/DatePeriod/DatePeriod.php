@@ -19,8 +19,16 @@ class DatePeriod
      */
     public function __construct(array $period = [])
     {
+        if (!array_key_exists('from', $period)) {
+            throw new InvalidDatePeriodException('missing start date');        
+        }
+    
+        if (!array_key_exists('to', $period)) {
+            throw new InvalidDatePeriodException('missing end date');
+        }
+        
         $from = $period['from'];
-        $to = $period['to'];
+        $to = $period['to'];       
         
         try {
             $this->from = Carbon::createFromFormat('Y-m-d', $from)->startOfDay();

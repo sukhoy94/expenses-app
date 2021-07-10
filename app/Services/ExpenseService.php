@@ -10,8 +10,8 @@ use App\Models\Budget;
 use App\Models\Expense;
 use App\Models\User;
 use App\Repositories\ExpenseRepository;
+use App\ValueObjects\DatePeriod\DatePeriod;
 use Carbon\Carbon;
-use Carbon\Traits\Creator;
 use Illuminate\Support\Collection;
 
 class ExpenseService
@@ -106,9 +106,8 @@ class ExpenseService
         );
     }
     
-    public function getExpensesMonthSummary(Collection $userExpensesCurrentMonth): array
+    public function getExpensesMonthSummary(User $user): array
     {
-        // TODO: to service, add user param
         $budget = Budget::where('month', '=', Carbon::now()->month)
             ->where('year', '=', Carbon::now()->year)
             ->where('user_id', '=', $this->userService->getLoggedUser()->id)
@@ -117,11 +116,15 @@ class ExpenseService
         
         $budgetAmount = $budget ? $budget->amount : 0;
         
-        $total = $userExpensesCurrentMonth->sum('amount');
+        $datePeriod = new DatePeriod([
+            'from' => Carbon::today()->startOfMonth()->format('Y-m-d'), 
+            'to' => Carbon::today()->endOfMonth()->format('Y-m-d'), 
+        ]);
+        
+        $total = $this->getExpensesAmount($user, $datePeriod);
         $remaining = $budgetAmount - $total;
         $remainingPerDay = $remaining / $this->getDaysTillTheEndOfThisMonthIncludingToday();
        
-        // TODO: to DTO
         return [
             'total' => $total,
             'remaining' => $remaining,
@@ -130,13 +133,31 @@ class ExpenseService
         ];
     }
     
-    public function getTodayExpenseAmount(User $user): float
+    public function getExpensesAmount(User $user, DatePeriod $datePeriod): float
     {
-       $expenses =  $this->repository->getUserExpenses($user, Carbon::today(), Carbon::tomorrow());
-       return (float) $expenses->sum('amount');
+        return round ($this->repository->getTotalAmountOfSpentMoneyForPeriod($user, $datePeriod), 2);
     }
     
+    public function getTodayExpenseAmount(User $user): float
+    {
+        $datePeriod = new DatePeriod([
+            'from' => Carbon::today()->format('Y-m-d'),
+            'to' => Carbon::today()->format('Y-m-d'),
+        ]);
+        
+        return round ($this->repository->getTotalAmountOfSpentMoneyForPeriod($user, $datePeriod), 2);
+    }
     
+    public function getYesterdayExpenseAmount(User $user): float
+    {
+        $datePeriod = new DatePeriod([
+            'from' => Carbon::yesterday()->format('Y-m-d'),
+            'to' => Carbon::yesterday()->format('Y-m-d'),
+        ]);
+        
+        return round ($this->repository->getTotalAmountOfSpentMoneyForPeriod($user, $datePeriod), 2);
+    }
+        
     /**
      * @param Expense $expense
      */
