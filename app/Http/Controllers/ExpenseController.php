@@ -8,7 +8,9 @@ use App\Models\Expense;
 use App\Services\ExpenseService;
 use App\Services\UserService;
 use App\ValueObjects\DatePeriod\DatePeriod;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class ExpenseController extends Controller
 {
@@ -50,12 +52,14 @@ class ExpenseController extends Controller
             'spentTodayYesterdayDifference' => abs($spentTodayYesterdayDifference),
             'categories' => Category::all(),
             'top10expenses' => $top10expenses,
+            'currentDateTime' => (Carbon::now('Europe/Warsaw'))->format('Y-m-d\TH:i'),
         ]);
     }
     
     public function edit(Expense $expense)
     {
         return view('expenses.edit', [
+            'expenseCreatedAtFormatted' => (new \DateTime($expense->created_at))->format('Y-m-d\TH:i'),
             'expense' => $expense,
             'categories' => Category::all(),
         ]);
@@ -65,7 +69,8 @@ class ExpenseController extends Controller
     {
         $expense->amount = $request->expendedAmount;   
         $expense->title = $request->expendedAmountTitle;   
-        $expense->category_id = $request->category;   
+        $expense->category_id = $request->category;
+        $expense->created_at = $request->input('expendedDate');    
         $expense->save();
         
         $request->session()->flash('updateExpenseSuccessMessage', 'Expense was successfully updated');
@@ -75,13 +80,12 @@ class ExpenseController extends Controller
     public function store(StoreExpenseRequest $request)
     {
         $expense = new Expense();
-        
         $expense->amount = $request->input('expendedAmount');
         $expense->title = $request->input('expendedAmountTitle');
         $expense->category_id = $request->input('category');
-    
         $expense->user_id = $this->userService->getLoggedUser()->id;
-        
+        $expense->created_at = $request->input('expendedDate');
+      
         $expense->save();
     
         $request->session()->flash('addExpenseSuccessMessage', 'Expense was successfully added');
