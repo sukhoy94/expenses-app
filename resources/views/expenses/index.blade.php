@@ -70,10 +70,13 @@
                         value="{{ $currentDateTime }}"
                     >
                 </div>
-                
-            </div>
-            
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+                <div class="col-sm-3 col-xs-12 form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Submit
+                    </button>
+                </div>                
+            </div>            
         </form>        
 
         <span style="font-size: 15px; margin-top: 20px;" class="badge badge-info">Spent today</span>: 
