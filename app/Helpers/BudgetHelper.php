@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BudgetHelper
 {
-    public function addPeriodForBudget(Collection $budgets)
+    public function addPeriodForBudget(Collection $budgets): Collection
     {
         return $budgets->each(function ($budget) {
             $budget->period = (Carbon::createFromFormat('!m', $budget->month))->format('F');
-        }); 
+        });
     }
 }

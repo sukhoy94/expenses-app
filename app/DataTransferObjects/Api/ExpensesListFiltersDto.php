@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\DataTransferObjects\Api;
-
 
 use App\Http\Requests\Api\ExpensesListRequest;
 use Carbon\Carbon;
@@ -13,9 +11,9 @@ use Spatie\DataTransferObject\DataTransferObject;
 class ExpensesListFiltersDto extends DataTransferObject
 {
     public int $year;
-    public int $month;      
+    public int $month;
     
-    public static function fromRequest(ExpensesListRequest $request) 
+    public static function fromRequest(ExpensesListRequest $request): ExpensesListFiltersDto
     {
         return new self([
             'year' => (int) $request->input('year'),
@@ -26,10 +24,10 @@ class ExpensesListFiltersDto extends DataTransferObject
     public function startPeriod(): Carbon
     {
         return Carbon::createFromFormat('Y-m-d', "{$this->year}-{$this->month}-01")->firstOfMonth();
-    }    
+    }
     
     public function endPeriod(): Carbon
     {
         return Carbon::createFromFormat('Y-m-d', "{$this->year}-{$this->month}-01")->endOfMonth();
-    }    
+    }
 }

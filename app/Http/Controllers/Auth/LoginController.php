@@ -18,16 +18,16 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
+    
     use AuthenticatesUsers;
-
+    
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = '/expenses';
-
+    
     /**
      * Create a new controller instance.
      *
@@ -42,7 +42,7 @@ class LoginController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     protected function authenticated()
-    {        
+    {
         return redirect($this->redirectTo);
     }
 }

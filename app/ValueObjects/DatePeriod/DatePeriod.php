@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\ValueObjects\DatePeriod;
-
 
 use App\Exceptions\InvalidDatePeriodException;
 use Carbon\Carbon;
@@ -15,6 +13,11 @@ class DatePeriod
     private Carbon $to;
     
     /**
+     * @param array $period = [
+     *      from (string) - Y-m-d,
+     *      to (string - Y-m-d),
+     * ]
+     * 
      * @throws InvalidDatePeriodException
      */
     public function __construct(array $period = [])

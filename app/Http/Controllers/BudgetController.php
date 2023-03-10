@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -13,16 +13,15 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    private $budgetService;
-    private $userService;
-    private $budgetHelper;
+    private BudgetService $budgetService;
+    private UserService $userService;
+    private BudgetHelper $budgetHelper;
     
     public function __construct(
-        BudgetService $budgetService, 
+        BudgetService $budgetService,
         UserService $userService,
         BudgetHelper $budgetHelper
-    )
-    {
+    ) {
         $this->budgetService = $budgetService;
         $this->userService = $userService;
         $this->budgetHelper = $budgetHelper;
@@ -30,7 +29,7 @@ class BudgetController extends Controller
     
     public function index()
     {
-        $currentMonthBudget = $this->budgetService->currentMonthBudget($this->userService->getLoggedUser());
+        $currentMonthBudget = $this->budgetService->getCurrentMonthBudgetForUser($this->userService->getLoggedUser());
         $budgets = $this->budgetHelper->addPeriodForBudget(
             $this->budgetService->getUserBudgets($this->userService->getLoggedUser())
         );
@@ -44,22 +43,33 @@ class BudgetController extends Controller
     
     public function store(Request $request)
     {
-
         $request->validate([
             'amount' => 'required|min:1|numeric',
         ]);
         
         $loggedUserId = $this->userService->getLoggedUser()->id;
-
+        
         if (!$request->id) {
             Budget::updateOrCreate(
-                ['user_id' => $loggedUserId, 'month' => Carbon::now()->month, 'year' => Carbon::now()->year], // match condition
-                ['amount' => $request->amount, 'user_id' => $loggedUserId, 'month' => Carbon::now()->month, 'year' => Carbon::now()->year] // update
+                // match condition
+                [
+                    'user_id' => $loggedUserId, 
+                    'month' => Carbon::now()->month, 
+                    'year' => Carbon::now()->year,
+                ],
+                
+                // update
+                [
+                    'amount' => $request->amount, 
+                    'user_id' => $loggedUserId, 
+                    'month' => Carbon::now()->month,
+                    'year' => Carbon::now()->year,
+                ]
             );
-    
+            
             $request->session()->flash('budgetModifiedSuccessMessage', 'Budget was successfully saved');
-         
-            return redirect()->route('budgets.index');           
-        }       
+            
+            return redirect()->route('budgets.index');
+        }
     }
 }

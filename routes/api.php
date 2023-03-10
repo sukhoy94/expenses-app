@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/expenses', [ExpenseController::class, 'index'])->name('api.expenses.index');
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('api.expenses.index');

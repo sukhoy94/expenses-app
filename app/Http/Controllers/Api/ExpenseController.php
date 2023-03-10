@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ExpensesListRequest;
 use App\Services\Api\ExpenseService;
 use App\Services\UserService;
-use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class ExpenseController extends Controller
 {
@@ -17,21 +17,20 @@ class ExpenseController extends Controller
     public function __construct(
         ExpenseService $expenseService,
         UserService $userService
-    )
-    {
-        $this->expenseService = $expenseService;        
-        $this->userService = $userService;        
+    ) {
+        $this->expenseService = $expenseService;
+        $this->userService = $userService;
     }
     
-    public function index(ExpensesListRequest $request)
+    public function index(ExpensesListRequest $request): JsonResponse
     {
         $filters = ExpensesListFiltersDto::fromRequest($request);
         $expenses = $this->expenseService->getUserExpensesList($this->userService->getLoggedUser(), $filters);
-    
+        
         $expenses->each(function ($expense) {
             $expense->category = $expense->category->title;
         });
-
+        
         return response()->json([
             'expenses' => $expenses,
         ]);

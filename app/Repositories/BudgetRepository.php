@@ -2,28 +2,24 @@
 
 declare(strict_types=1);
 
-
 namespace App\Repositories;
 
-
 use App\Exceptions\InvalidQueryParameterException;
-use App\Models\Budget;
-use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class BudgetRepository
 {
-    public function getBudget(array $params = [])
+    private const MIN_MONTH_RANGE = 1;
+    private const MAX_MONTH_RANGE = 12;
+    
+    public function getBudget(array $params = []): Collection
     {
         $queryBuilder = DB::table('budgets');
         
         if (array_key_exists('month', $params)) {
-            $params['month'] = (int) $params['month'];
-            
-            if ($params['month'] < 1 || $params['month'] > 12) {
-                throw new InvalidQueryParameterException('Month parameter should be in range between 1 and 12');
-            }
-            
+            $params['month'] = (int) $params['month'];            
+            $this->validateMonthRange((int) $params['month']);
             $queryBuilder->where('month', '=', $params['month']);
         }
         
@@ -33,5 +29,23 @@ class BudgetRepository
         }
         
         return $queryBuilder->get();
+    }
+    
+    /**
+     * @param int $month
+     * @return void
+     * @throws InvalidQueryParameterException
+     */
+    private function validateMonthRange(int $month): void
+    {
+        if ($month < self::MIN_MONTH_RANGE || $month > self::MAX_MONTH_RANGE) {
+            throw new InvalidQueryParameterException(
+                sprintf(
+                    'Month parameter should be in range between %d and %d', 
+                    self::MIN_MONTH_RANGE,
+                    self::MAX_MONTH_RANGE
+                )
+            );
+        }
     }
 }

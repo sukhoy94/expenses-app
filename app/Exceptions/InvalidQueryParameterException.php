@@ -8,5 +8,4 @@ namespace App\Exceptions;
 
 class InvalidQueryParameterException extends \Exception
 {
-    
 }

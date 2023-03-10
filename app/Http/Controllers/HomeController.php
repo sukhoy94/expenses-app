@@ -1,6 +1,9 @@
 <?php
 
-namespace  App\Http\Controllers;;
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
+
 
 use App\Repositories\ExpenseRepository;
 use App\Services\ExpenseService;
@@ -13,8 +16,8 @@ class HomeController extends Controller
     
     /**
      *
-     * @param ExpenseRepository $expenseRepository
-     * @param ExpenseService $expenseService
+     * @param  ExpenseRepository  $expenseRepository
+     * @param  ExpenseService  $expenseService
      */
     public function __construct(
         ExpenseRepository $expenseRepository,
@@ -25,7 +28,7 @@ class HomeController extends Controller
         $this->expenseRepository = $expenseRepository;
         $this->expenseService = $expenseService;
     }
-
+    
     /**
      * Show the application dashboard.
      *

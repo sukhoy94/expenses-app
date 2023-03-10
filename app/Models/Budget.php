@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Budget extends Model
 {
@@ -11,7 +14,7 @@ class Budget extends Model
  
     protected $guarded = [];
     
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class);
     }
